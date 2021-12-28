@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(indexes = {@Index(columnList = "username", unique = true), @Index(columnList = "email", unique = true)})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,23 +13,20 @@ public class User {
     private String username;
     private String password;
     private String email;
-    private String phoneNumber;
-    private Date birthday;
-    private String name;
-    private String lastName;
+    @Embedded
+    private  Credentials credentials;
+    @ManyToOne(optional = false)
+    private  Role role;
 
     public User() {
     }
 
-    public User(long id, String username, String password, String email, String phoneNumber, Date birthday, String name, String lastName) {
-        this.id = id;
+    public User(String username, String password, String email, Credentials credentials, Role role) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.birthday = birthday;
-        this.name = name;
-        this.lastName = lastName;
+        this.credentials = credentials;
+        this.role = role;
     }
 
     public long getId() {
@@ -64,35 +61,5 @@ public class User {
         this.email = email;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 }
