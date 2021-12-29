@@ -4,30 +4,40 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 //https://thorben-janssen.com/complete-guide-inheritance-strategies-jpa-hibernate/
-@MappedSuperclass
+@Inheritance(strategy =InheritanceType.JOINED)
 @Table(indexes = {@Index(columnList = "username", unique = true), @Index(columnList = "email", unique = true)})
-public abstract class User {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
-    protected String username;
-    protected String password;
+    private Long id;
+    private String username;
+    private String password;
     @NotNull
-    protected String email;
+    private String email;
     @Embedded
-    protected   Credentials credentials;
+    private Credentials credentials;
+    @Embedded
+    private ClientsInfo clientsInfo;
+    @Embedded
+    private ManagersInfo managersInfo;
     @ManyToOne(optional = false)
-    protected Role role;
+    private Role role;
+
+
+
 
     public User() {
     }
 
-    public User(String username, String password, String email, Credentials credentials, Role role) {
+    public User(String username, String password, String email, Credentials credentials,
+                Role role, ClientsInfo clientsInfo, ManagersInfo managersInfo) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.credentials = credentials;
         this.role = role;
+        this.clientsInfo = clientsInfo;
+        this.managersInfo = managersInfo;
     }
 
     public Credentials getCredentials() {
@@ -78,5 +88,19 @@ public abstract class User {
         this.email = email;
     }
 
+    public ClientsInfo getClientsInfo() {
+        return clientsInfo;
+    }
 
+    public void setClientsInfo(ClientsInfo clientsInfo) {
+        this.clientsInfo = clientsInfo;
+    }
+
+    public ManagersInfo getManagersInfo() {
+        return managersInfo;
+    }
+
+    public void setManagersInfo(ManagersInfo managersInfo) {
+        this.managersInfo = managersInfo;
+    }
 }

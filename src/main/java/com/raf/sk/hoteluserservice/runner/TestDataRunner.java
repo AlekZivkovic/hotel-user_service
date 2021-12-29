@@ -3,9 +3,7 @@ package com.raf.sk.hoteluserservice.runner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-import com.raf.sk.hoteluserservice.domain.Admin;
 import com.raf.sk.hoteluserservice.domain.Role;
-import com.raf.sk.hoteluserservice.repository.AdminRepository;
 import com.raf.sk.hoteluserservice.repository.RoleRepositroy;
 
 @Profile({"default"})

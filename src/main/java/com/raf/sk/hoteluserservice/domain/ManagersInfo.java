@@ -1,26 +1,21 @@
 package com.raf.sk.hoteluserservice.domain;
 
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 
-@Entity
-@DiscriminatorValue("M")
-public class Manager extends  User {
+@Embeddable
+public class ManagersInfo{
     private String hotelName;
+    @Temporal(TemporalType.DATE)
     private Date startDate;
 
-    public Manager() {
+    public ManagersInfo() {
     }
 
-    public Manager(String hotelName, Date startDate) {
-        this.hotelName = hotelName;
-        this.startDate = startDate;
-    }
-
-    public Manager(String username, String password, String email, Credentials credentials, Role role, String hotelName, Date startDate) {
-        super(username, password, email, credentials, role);
+    public ManagersInfo(String hotelName, Date startDate) {
         this.hotelName = hotelName;
         this.startDate = startDate;
     }
