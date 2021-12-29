@@ -1,22 +1,23 @@
 package raf.sk.user.service.user.service.domain;
 
-import javax.persistence.*;
-import java.util.Date;
+import com.sun.istack.NotNull;
 
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+import javax.persistence.*;
+//https://thorben-janssen.com/complete-guide-inheritance-strategies-jpa-hibernate/
+@MappedSuperclass
 @Table(indexes = {@Index(columnList = "username", unique = true), @Index(columnList = "email", unique = true)})
-public class User {
+public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  long id;
-    private String username;
-    private String password;
-    private String email;
+    protected Long id;
+    protected String username;
+    protected String password;
+    @NotNull
+    protected String email;
     @Embedded
-    private  Credentials credentials;
+    protected   Credentials credentials;
     @ManyToOne(optional = false)
-    private  Role role;
+    protected Role role;
 
     public User() {
     }
@@ -29,7 +30,23 @@ public class User {
         this.role = role;
     }
 
-    public long getId() {
+    public Credentials getCredentials() {
+        return credentials;
+    }
+
+    public void setCredentials(Credentials credentials) {
+        this.credentials = credentials;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Long getId() {
         return id;
     }
 

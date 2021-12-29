@@ -2,6 +2,8 @@ package raf.sk.user.service.user.service.domain;
 
 
 import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Embeddable
@@ -9,6 +11,7 @@ public class Credentials {
     private String name;
     private String lastName;
     private String phoneNumber;
+    @Temporal(TemporalType.DATE)
     private Date birthday;
 
     public Credentials() {
