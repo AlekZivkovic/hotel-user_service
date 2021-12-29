@@ -22,7 +22,7 @@ public class User {
     private ManagersInfo managersInfo;
     @ManyToOne(optional = false)
     private Role role;
-
+    private Boolean access;
 
 
 
@@ -30,14 +30,23 @@ public class User {
     }
 
     public User(String username, String password, String email, Credentials credentials,
-                Role role, ClientsInfo clientsInfo, ManagersInfo managersInfo) {
+                ClientsInfo clientsInfo, ManagersInfo managersInfo, Role role, Boolean access) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.credentials = credentials;
-        this.role = role;
         this.clientsInfo = clientsInfo;
         this.managersInfo = managersInfo;
+        this.role = role;
+        this.access = access;
+    }
+
+    public Boolean getAccess() {
+        return access;
+    }
+
+    public void setAccess(Boolean access) {
+        this.access = access;
     }
 
     public Credentials getCredentials() {

@@ -10,10 +10,15 @@ public interface UserService{
 
     DiscountDto findDiscount(Long id);
 
+
+
     ManagerDto addManager(ManagerCreateDto userCreateDto);
     ClientDto addClient(ClientCreateDto userCreateDto);
 
     TokenResponseDto login(TokenRequestDto tokenRequestDto);
+
+    UserDto restrainAccess(UserDto userDto);
+
 
 
 
