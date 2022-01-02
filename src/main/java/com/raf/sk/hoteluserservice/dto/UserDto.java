@@ -3,11 +3,11 @@ package com.raf.sk.hoteluserservice.dto;
 
 
 public class UserDto {
-    private Long id;
-    private String email;
-    private String firstName;
-    private String lastName;
-    private String username;
+    protected Long id;
+    protected String email;
+    protected String firstName;
+    protected String lastName;
+    protected String username;
 
     public UserDto() {
     }

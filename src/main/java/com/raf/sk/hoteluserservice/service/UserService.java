@@ -10,14 +10,25 @@ public interface UserService{
 
     DiscountDto findDiscount(Long id);
 
+    UserCreateDto registerClient(ClientCreateDto clientCreateDto);
+    UserCreateDto registerManager(ManagerCreateDto managerCreateDto);
+
+    //treba dodati verifikaciju koja ce pozvati addManager/Client
 
 
-    ManagerDto addManager(ManagerCreateDto userCreateDto);
-    ClientDto addClient(ClientCreateDto userCreateDto);
+    //Dobijeni useri ce biti prolsedjeni notifikacionom servicu
+    // koji ce da obavesti korisnika da je uspesno kreiran nalog
+    UserDto verifyUser(Long id);
+
+    UserModifyRequestDto requestModify(Long id);
+    UserDto modifyUser(UserModifyResponseDto userModifyDto);
 
     TokenResponseDto login(TokenRequestDto tokenRequestDto);
 
-    UserDto restrainAccess(UserDto userDto);
+    AccessResponseDto restrainAccess(AccessRequestDto accessRequestDto);
+
+
+
 
 
 

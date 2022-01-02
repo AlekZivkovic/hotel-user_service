@@ -4,10 +4,9 @@ import com.raf.sk.hoteluserservice.domain.ClientsInfo;
 import com.raf.sk.hoteluserservice.domain.Credentials;
 import com.raf.sk.hoteluserservice.domain.ManagersInfo;
 import com.raf.sk.hoteluserservice.domain.User;
-import com.raf.sk.hoteluserservice.dto.ClientCreateDto;
-import com.raf.sk.hoteluserservice.dto.ManagerCreateDto;
-import com.raf.sk.hoteluserservice.dto.UserDto;
+import com.raf.sk.hoteluserservice.dto.*;
 import com.raf.sk.hoteluserservice.repository.RoleRepositroy;
+import com.sun.istack.NotNull;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -78,9 +77,79 @@ public class UserMapper {
         ManagersInfo managersInfo=new ManagersInfo();
         managersInfo.setHotelName(userCreateDto.getManagersInfoDto().getHotelName());
         managersInfo.setStartDate(userCreateDto.getManagersInfoDto().getStartDate());
-
+        user.setManagersInfo(managersInfo);
         //access
         user.setAccess(true);
         return  user;
     }
+
+    public UserModifyRequestDto userToUserModifyRequestDto(User user){
+        UserModifyRequestDto userModifyDto=new UserModifyRequestDto();
+
+        userModifyDto.setEmail(user.getEmail());
+        userModifyDto.setUsername(user.getUsername());
+        userModifyDto.setPassword(user.getPassword());
+
+        //credentials
+        CredentialsDto credentialsDto=new CredentialsDto();
+        credentialsDto.setBirthday(user.getCredentials().getBirthday());
+        credentialsDto.setFirstname(user.getCredentials().getName());
+        credentialsDto.setLastName(user.getCredentials().getLastName());
+        credentialsDto.setPhoneNumber(user.getCredentials().getPhoneNumber());
+        userModifyDto.setCredentialsDto(credentialsDto);
+
+        //Clients
+        if(user.getClientsInfo() != null) {
+            ClientCreateDto.ClientsInfoDto clientsInfoDto = new ClientCreateDto.ClientsInfoDto();
+            clientsInfoDto.setPostcard(user.getClientsInfo().getPostcard());
+            userModifyDto.setClientsInfo(clientsInfoDto);
+        }
+        if(user.getManagersInfo() != null){
+            ManagerCreateDto.ManagersInfoDto managersInfoDto= new ManagerCreateDto.ManagersInfoDto();
+            managersInfoDto.setHotelName(user.getManagersInfo().getHotelName());
+            managersInfoDto.setStartDate(user.getManagersInfo().getStartDate());
+            userModifyDto.setManagersInfo(managersInfoDto);
+        }
+        return  userModifyDto;
+    }
+
+    public User userModifyResponseDtoToUser(User user,UserModifyResponseDto userModifyDto){
+        if(userModifyDto.getUsername().isPresent())
+            user.setUsername(userModifyDto.getUsername().get());
+        if(userModifyDto.getPassword().isPresent())
+            user.setPassword(userModifyDto.getPassword().get());
+
+        if(userModifyDto.getCredentialsDto().isPresent()) {
+            //Credentials
+            Credentials credentials = new Credentials();
+            credentials.setName(userModifyDto.getCredentialsDto().get().getFirstname());
+            credentials.setLastName(userModifyDto.getCredentialsDto().get().getLastName());
+            credentials.setBirthday(userModifyDto.getCredentialsDto().get().getBirthday());
+            credentials.setPhoneNumber(userModifyDto.getCredentialsDto().get().getPhoneNumber());
+            user.setCredentials(credentials);
+        }
+        if(user.getManagersInfo() != null && userModifyDto.getManagersInfo().isPresent()) {
+            ManagersInfo managersInfo=new ManagersInfo();
+            managersInfo.setHotelName(userModifyDto.getManagersInfo().get().getHotelName());
+            managersInfo.setStartDate(userModifyDto.getManagersInfo().get().getStartDate());
+            user.setManagersInfo(managersInfo);
+        }
+        if(user.getClientsInfo() !=null && userModifyDto.getClientsInfoDto().isPresent()){
+            ClientsInfo clientsInfo=new ClientsInfo();
+            clientsInfo.setPostcard(userModifyDto.getClientsInfoDto().get().getPostcard());
+            user.setClientsInfo(clientsInfo);
+        }
+
+        return  user;
+    }
+
+
+    public  UserCreateDto userToUserCreateDto(@NotNull String username){
+        UserCreateDto userCreateDto=new UserCreateDto();
+        userCreateDto.setUsername(username);
+        userCreateDto.setMessage("Credentials accepted. Check mail for verification");
+        return  userCreateDto;
+    }
+
+
 }
