@@ -28,7 +28,7 @@ public class SecurityAlert {
     }
 
 
-    @Around("@annotation(com.raf.sk.hoteluserservice.secutiry.CheckSecurity)")
+    @Around("@annotation(com.raf.sk.hoteluserservice.security.CheckSecurity)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         //Get method signature
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();

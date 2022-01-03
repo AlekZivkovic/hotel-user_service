@@ -4,7 +4,7 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 //https://thorben-janssen.com/complete-guide-inheritance-strategies-jpa-hibernate/
-@Inheritance(strategy =InheritanceType.JOINED)
+@Entity
 @Table(indexes = {@Index(columnList = "username", unique = true), @Index(columnList = "email", unique = true)})
 public class User {
     @Id
@@ -22,7 +22,7 @@ public class User {
     private ManagersInfo managersInfo;
     @ManyToOne(optional = false)
     private Role role;
-    private Boolean access;
+    private Boolean access=false;
 
 
 

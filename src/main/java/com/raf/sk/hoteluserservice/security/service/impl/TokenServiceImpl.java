@@ -5,7 +5,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import com.raf.sk.hoteluserservice.security.service.TokenService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class TokenServiceImpl implements TokenService {
 
     @Value("${oauth.jwt.secret}")

@@ -40,6 +40,7 @@ public class TestDataRunner implements CommandLineRunner {
         admin.setUsername("admin");
         admin.setPassword("admin");
         admin.setRole(roleAdmin);
+        admin.setAccess(true);
         //admin.setNumberOfReservations(7);
         userRepository.save(admin);
         //User statuses

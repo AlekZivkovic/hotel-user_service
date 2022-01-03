@@ -125,7 +125,8 @@ public class UserServiceImpl implements UserService {
                                 tokenRequestDto.getPassword())));
         //See if user has access
         if(!user.getAccess())
-            throw new AccessDeniedException(String.format("User with username: %s has access denied.",tokenRequestDto.getUsername()));
+            throw new AccessDeniedException(String.format("User with username: %s unable to connect. If you didnt verify the account look for sent mail."
+                    ,tokenRequestDto.getUsername()));
 
         //Create token payload
         Claims claims = Jwts.claims();
