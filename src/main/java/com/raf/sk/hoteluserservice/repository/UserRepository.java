@@ -10,5 +10,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends  JpaRepository<User,Long> {
     Optional<User> findUserByUsernameAndPassword(String username, String password);
+    //bice potrebo da se ugrabi svi menadzeri datog hotela
+    Optional<User> findUserByManagersInfoHotelName(String hotelName);
 
 }

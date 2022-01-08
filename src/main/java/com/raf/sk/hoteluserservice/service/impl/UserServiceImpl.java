@@ -1,5 +1,7 @@
 package com.raf.sk.hoteluserservice.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.raf.sk.hoteluserservice.domain.User;
 import com.raf.sk.hoteluserservice.domain.UserRating;
 import com.raf.sk.hoteluserservice.dto.*;
@@ -12,8 +14,10 @@ import com.raf.sk.hoteluserservice.security.service.TokenService;
 import com.raf.sk.hoteluserservice.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -25,17 +29,28 @@ public class UserServiceImpl implements UserService {
 
 
     private TokenService tokenService;
+
     private UserRepository userRepository;
     private UserRatingRepositroy userStatusRepository;
     private UserMapper userMapper;
+    private JmsTemplate notificationQue;
+    private ObjectMapper objectMapper;
+    private String destinationSendEmailsDestination;
+    private String mailPath;
 
-    public UserServiceImpl(UserRepository userRepository, TokenService tokenService, UserRatingRepositroy userStatusRepository, UserMapper userMapper) {
-        this.userRepository = userRepository;
+    public UserServiceImpl(TokenService tokenService, UserRepository userRepository
+            , UserRatingRepositroy userStatusRepository, UserMapper userMapper,
+                           JmsTemplate notificationQue,ObjectMapper objectMapper, @Value("${destination.notification.sendEmail}") String destinationSendEmailsDestination
+                               , @Value("${mail.path}") String mailPath) {
         this.tokenService = tokenService;
-        this.userMapper = userMapper;
+        this.userRepository = userRepository;
         this.userStatusRepository = userStatusRepository;
+        this.userMapper = userMapper;
+        this.notificationQue = notificationQue;
+        this.objectMapper=objectMapper;
+        this.destinationSendEmailsDestination=destinationSendEmailsDestination;
+        this.mailPath=mailPath;
     }
-
 
     @Override
     public Page<UserDto> findAll(Pageable pageable) {
@@ -66,6 +81,14 @@ public class UserServiceImpl implements UserService {
         //User needs to verific account
         user.setAccess(false);
         userRepository.save(user);
+        String link=mailPath.concat("/").concat(user.getId().toString());
+        try {
+            NotificationDto notificationDto=userMapper.userToNotificationDto(user);
+            notificationDto.setVerifyLink(link);
+            notificationQue.convertAndSend(destinationSendEmailsDestination,objectMapper.writeValueAsString(notificationDto));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         return userMapper.userToUserCreateDto(clientCreateDto.getUsername()) ;
     }
 

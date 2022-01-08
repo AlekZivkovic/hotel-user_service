@@ -74,9 +74,9 @@ public class UserController {
     }
 
     @ApiOperation(value = "Verify an User")
-    @GetMapping("/verify")
-    public ResponseEntity<UserDto> verifyUser(@RequestBody String id){
-        return  new ResponseEntity<>(userService.verifyUser(Long.valueOf(id)),HttpStatus.OK);
+    @GetMapping("/verify/{id}")
+    public ResponseEntity<UserDto> verifyUser(@PathVariable("id") Long id){
+        return  new ResponseEntity<>(userService.verifyUser(id),HttpStatus.OK);
     }
 
 

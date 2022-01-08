@@ -3,6 +3,8 @@ package com.raf.sk.hoteluserservice.domain;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
+
 //https://thorben-janssen.com/complete-guide-inheritance-strategies-jpa-hibernate/
 @Entity
 @Table(indexes = {@Index(columnList = "username", unique = true), @Index(columnList = "email", unique = true)})
@@ -42,6 +44,8 @@ public class User {
     }
 
     public Boolean getAccess() {
+        if (access== null)
+            return false;
         return access;
     }
 

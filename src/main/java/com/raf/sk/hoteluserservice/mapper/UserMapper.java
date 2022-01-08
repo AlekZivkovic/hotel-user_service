@@ -151,5 +151,18 @@ public class UserMapper {
         return  userCreateDto;
     }
 
+    public NotificationDto userToNotificationDto(User user){
+        NotificationDto notificationDto=new NotificationDto();
+
+        notificationDto.setUserDto(this.userToUserDto(user));
+
+        NotificationTypeDto notificationTypeDto=new NotificationTypeDto();
+        notificationTypeDto.setType("TYPE_VERIFY");
+        notificationDto.setNotificationType(notificationTypeDto);
+
+
+        return  notificationDto;
+    }
+
 
 }

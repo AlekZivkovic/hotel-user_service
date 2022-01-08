@@ -34,6 +34,7 @@ public class TestDataRunner implements CommandLineRunner {
         Role roleManager = new Role("ROLE_MANAGER", "Manager role");
         roleRepository.save(roleUser);
         roleRepository.save(roleAdmin);
+        roleRepository.save(roleManager);
         //Insert admin
         User admin = new User();
         admin.setEmail("admin@gmail.com");

@@ -8,8 +8,8 @@
 		<version>2.2.2.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>raf.sk.user.service</groupId>
-	<artifactId>user.service</artifactId>
+	<groupId>raf.sk</groupId>
+	<artifactId>user-service</artifactId>
 	<version>0.0.1</version>
 	<name>user.service</name>
 	<description>drugi projekat</description>
@@ -69,6 +69,11 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>1.8.12</version>
 			<scope>compile</scope>
+		</dependency>
+		<!-- MessageBroker-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-activemq</artifactId>
 		</dependency>
 
 	</dependencies>
