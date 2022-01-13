@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -98,6 +99,14 @@ public class UserServiceImpl implements UserService {
         //jos nije registrovan
         user.setAccess(false);
         userRepository.save(user);
+        String link=mailPath.concat("/").concat(user.getId().toString());
+        try {
+            NotificationDto notificationDto=userMapper.userToNotificationDto(user);
+            notificationDto.setVerifyLink(link);
+            notificationQue.convertAndSend(destinationSendEmailsDestination,objectMapper.writeValueAsString(notificationDto));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         return userMapper.userToUserCreateDto(managerCreateDto.getUsername());
     }
 
@@ -169,5 +178,14 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         accessResponseDto.setSavedChanges(true);
         return accessResponseDto;
+    }
+
+    @Override
+    public ManagerResponseDto hotelManagers(ManagerRequestDto managerRequestDto) {
+        List<UserDto> lista= userRepository.findAll().stream()
+                .filter(user -> user.getManagersInfo().getHotelName() ==managerRequestDto.getHotelname() )
+                .map(userMapper::userToUserDto).collect(Collectors.toList());
+
+        return  new ManagerResponseDto(lista);
     }
 }

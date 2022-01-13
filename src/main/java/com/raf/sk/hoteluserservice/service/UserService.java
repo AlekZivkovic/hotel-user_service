@@ -13,7 +13,7 @@ public interface UserService{
     UserCreateDto registerClient(ClientCreateDto clientCreateDto);
     UserCreateDto registerManager(ManagerCreateDto managerCreateDto);
 
-    //treba dodati verifikaciju koja ce pozvati addManager/Client
+    ManagerResponseDto hotelManagers(ManagerRequestDto managerRequestDto);
 
 
     //Dobijeni useri ce biti prolsedjeni notifikacionom servicu

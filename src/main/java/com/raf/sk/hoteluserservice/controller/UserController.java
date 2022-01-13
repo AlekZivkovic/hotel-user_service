@@ -96,4 +96,11 @@ public class UserController {
     }
 
 
+    @ApiOperation(value = "List of managers for hotel")
+   @GetMapping("/manager/hotel")
+   public  ResponseEntity<ManagerResponseDto> hotelsManagers(@RequestBody @Valid ManagerRequestDto managerRequestDto){
+       return new ResponseEntity<>(userService.hotelManagers(managerRequestDto), HttpStatus.OK);
+   }
+
+
 }
