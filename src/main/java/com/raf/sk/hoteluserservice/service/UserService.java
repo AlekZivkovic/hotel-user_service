@@ -28,7 +28,7 @@ public interface UserService{
 
     AccessResponseDto restrainAccess(AccessRequestDto accessRequestDto);
 
-
+    UserDto findUserById(long id);
 
 
 

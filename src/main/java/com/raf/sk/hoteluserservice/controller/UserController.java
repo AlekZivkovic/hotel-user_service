@@ -102,6 +102,12 @@ public class UserController {
        return new ResponseEntity<>(userService.hotelManagers(managerRequestDto), HttpStatus.OK);
    }
 
+    @ApiOperation(value = "Find user by id")
+    @GetMapping("/user/{id}")
+    public  ResponseEntity<UserDto> findUserById(@PathVariable("id") long id){
+        return new ResponseEntity<UserDto>(userService.findUserById(id), HttpStatus.OK);
+    }
+
     @ApiOperation(value = "Reset password for user")
     @PutMapping("/resetpassword")
     public ResponseEntity<Void> resetPassword(@RequestBody @Valid ResetPasswordRequestDto resetPasswordRequestDto){

@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -52,6 +53,16 @@ public class UserServiceImpl implements UserService {
         this.objectMapper=objectMapper;
         this.destinationSendEmailsDestination=destinationSendEmailsDestination;
         this.mailPath=mailPath;
+    }
+
+    @Override
+    public UserDto findUserById(long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if(!userOptional.isPresent())
+            throw new NotFoundException("User not found");
+
+        User user = userOptional.get();
+        return userMapper.userToUserDto(user);
     }
 
     @Override
