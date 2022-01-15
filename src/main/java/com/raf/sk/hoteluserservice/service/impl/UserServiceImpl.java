@@ -216,9 +216,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ManagerResponseDto hotelManagers(ManagerRequestDto managerRequestDto) {
+    public ManagerResponseDto hotelManagers(String hotelName) {
         List<UserDto> lista= userRepository.findAll().stream()
-                .filter(user -> user.getManagersInfo().getHotelName() ==managerRequestDto.getHotelname() )
+                .filter(user -> user.getManagersInfo().getHotelName() ==hotelName )
                 .map(userMapper::userToUserDto).collect(Collectors.toList());
 
         return  new ManagerResponseDto(lista);

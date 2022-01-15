@@ -13,7 +13,7 @@ public interface UserService{
     UserCreateDto registerClient(ClientCreateDto clientCreateDto);
     UserCreateDto registerManager(ManagerCreateDto managerCreateDto);
 
-    ManagerResponseDto hotelManagers(ManagerRequestDto managerRequestDto);
+    ManagerResponseDto hotelManagers(String hotelName);
 
     void resetpass(ResetPasswordRequestDto resetPasswordRequestDto);
 

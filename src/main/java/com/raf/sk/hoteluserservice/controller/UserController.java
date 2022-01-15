@@ -97,9 +97,9 @@ public class UserController {
 
 
     @ApiOperation(value = "List of managers for hotel")
-   @GetMapping("/manager/hotel")
-   public  ResponseEntity<ManagerResponseDto> hotelsManagers(@RequestBody @Valid ManagerRequestDto managerRequestDto){
-       return new ResponseEntity<>(userService.hotelManagers(managerRequestDto), HttpStatus.OK);
+   @GetMapping("/manager/{hotel}")
+   public  ResponseEntity<ManagerResponseDto> hotelsManagers(@PathVariable("hotel") String hotelName){
+       return new ResponseEntity<>(userService.hotelManagers(hotelName), HttpStatus.OK);
    }
 
     @ApiOperation(value = "Find user by id")
