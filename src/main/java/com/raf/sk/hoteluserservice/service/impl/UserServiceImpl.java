@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -77,6 +78,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void resetpass(ResetPasswordRequestDto resetPasswordRequestDto) {
+        //check if user exists
+        User user= userRepository.findUserByUsername(resetPasswordRequestDto.getUsername())
+                .orElseThrow(()->new NotFoundException(String
+                        .format("User with username: %d not found.", resetPasswordRequestDto.getUsername())));
+        //set new password
+        user.setPassword(UUID.randomUUID().toString().replace("-", "").substring(0,9));
+
+        //send notification
+        try {
+            NotificationDto notificationDto= userMapper.userToNotificationDto(user,"TYPE_RESET_PASSWORD");
+            notificationDto.setNewPassword(user.getPassword());
+            notificationQue.convertAndSend(destinationSendEmailsDestination,objectMapper.writeValueAsString(notificationDto));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        userRepository.save(user);
+
+        return;
+    }
+
+    @Override
     public UserCreateDto registerClient(ClientCreateDto clientCreateDto) {
         User user=userMapper.clientCreateDtoToClient(clientCreateDto);
         //User needs to verific account
@@ -84,7 +108,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         String link=mailPath.concat("/").concat(user.getId().toString());
         try {
-            NotificationDto notificationDto=userMapper.userToNotificationDto(user);
+            NotificationDto notificationDto=userMapper.userToNotificationDto(user, "TYPE_VERIFY");
             notificationDto.setVerifyLink(link);
             notificationQue.convertAndSend(destinationSendEmailsDestination,objectMapper.writeValueAsString(notificationDto));
         } catch (JsonProcessingException e) {
@@ -101,7 +125,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         String link=mailPath.concat("/").concat(user.getId().toString());
         try {
-            NotificationDto notificationDto=userMapper.userToNotificationDto(user);
+            NotificationDto notificationDto=userMapper.userToNotificationDto(user,"TYPE_VERIFY");
             notificationDto.setVerifyLink(link);
             notificationQue.convertAndSend(destinationSendEmailsDestination,objectMapper.writeValueAsString(notificationDto));
         } catch (JsonProcessingException e) {

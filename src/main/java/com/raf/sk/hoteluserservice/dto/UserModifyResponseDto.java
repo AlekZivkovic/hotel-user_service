@@ -1,31 +1,20 @@
 package com.raf.sk.hoteluserservice.dto;
 
-import com.sun.istack.NotNull;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import java.util.Optional;
-
 public class UserModifyResponseDto {
-    @NotNull
     private Long id;
 
-    private Optional<@Email String>  email;
-    private Optional<@NotBlank String> firstName;
-    private Optional<@NotBlank String> lastName;
-    private Optional<@NotBlank String> username;
-    private  Optional<@NotBlank String > password;
+    private String  email;
+    private String firstName;
+    private String lastName;
+    private String username;
+    private String password;
 
-    private Optional<CredentialsDto> credentialsDto;
-    private  Optional<ClientCreateDto.ClientsInfoDto> clientsInfoDto;
-    private  Optional<ManagerCreateDto.ManagersInfoDto> managersInfo;
+    private CredentialsDto credentialsDto;
+    private  ClientCreateDto.ClientsInfoDto clientsInfoDto;
+    private  ManagerCreateDto.ManagersInfoDto managersInfo;
 
-    public Optional<String> getPassword() {
-        return password;
-    }
 
-    public void setPassword(Optional<String> password) {
-        this.password = password;
+    public UserModifyResponseDto() {
     }
 
     public Long getId() {
@@ -36,59 +25,67 @@ public class UserModifyResponseDto {
         this.id = id;
     }
 
-    public Optional<String> getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(Optional<String> email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public Optional<String> getFirstName() {
+    public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(Optional<String> firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public Optional<String> getLastName() {
+    public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(Optional<String> lastName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    public Optional<String> getUsername() {
+    public String getUsername() {
         return username;
     }
 
-    public void setUsername(Optional<String> username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
-    public Optional<CredentialsDto> getCredentialsDto() {
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public CredentialsDto getCredentialsDto() {
         return credentialsDto;
     }
 
-    public void setCredentialsDto(Optional<CredentialsDto> credentialsDto) {
+    public void setCredentialsDto(CredentialsDto credentialsDto) {
         this.credentialsDto = credentialsDto;
     }
 
-    public Optional<ClientCreateDto.ClientsInfoDto> getClientsInfoDto() {
+    public ClientCreateDto.ClientsInfoDto getClientsInfoDto() {
         return clientsInfoDto;
     }
 
-    public void setClientsInfoDto(Optional<ClientCreateDto.ClientsInfoDto> clientsInfoDto) {
+    public void setClientsInfoDto(ClientCreateDto.ClientsInfoDto clientsInfoDto) {
         this.clientsInfoDto = clientsInfoDto;
     }
 
-    public Optional<ManagerCreateDto.ManagersInfoDto> getManagersInfo() {
+    public ManagerCreateDto.ManagersInfoDto getManagersInfo() {
         return managersInfo;
     }
 
-    public void setManagersInfo(Optional<ManagerCreateDto.ManagersInfoDto> managersInfo) {
+    public void setManagersInfo(ManagerCreateDto.ManagersInfoDto managersInfo) {
         this.managersInfo = managersInfo;
     }
 }

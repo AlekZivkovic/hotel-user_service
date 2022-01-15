@@ -102,5 +102,12 @@ public class UserController {
        return new ResponseEntity<>(userService.hotelManagers(managerRequestDto), HttpStatus.OK);
    }
 
+    @ApiOperation(value = "Reset password for user")
+    @PutMapping("/resetpassword")
+    public ResponseEntity<Void> resetPassword(@RequestBody @Valid ResetPasswordRequestDto resetPasswordRequestDto){
+        userService.resetpass(resetPasswordRequestDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 }

@@ -22,8 +22,10 @@ public class UserMapper {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setEmail(user.getEmail());
-        userDto.setFirstName(user.getCredentials().getName());
-        userDto.setLastName(user.getCredentials().getLastName());
+        if(user.getCredentials()!=null) {
+            userDto.setFirstName(user.getCredentials().getName());
+            userDto.setLastName(user.getCredentials().getLastName());
+        }
         userDto.setUsername(user.getUsername());
         return userDto;
     }
@@ -114,29 +116,29 @@ public class UserMapper {
     }
 
     public User userModifyResponseDtoToUser(User user,UserModifyResponseDto userModifyDto){
-        if(userModifyDto.getUsername().isPresent())
-            user.setUsername(userModifyDto.getUsername().get());
-        if(userModifyDto.getPassword().isPresent())
-            user.setPassword(userModifyDto.getPassword().get());
+        if(userModifyDto.getUsername()!=null && !userModifyDto.getUsername().isEmpty())
+            user.setUsername(userModifyDto.getUsername());
+        if(userModifyDto.getPassword()!=null && !userModifyDto.getPassword().isEmpty())
+            user.setPassword(userModifyDto.getPassword());
 
-        if(userModifyDto.getCredentialsDto().isPresent()) {
+        if(userModifyDto.getCredentialsDto() != null) {
             //Credentials
             Credentials credentials = new Credentials();
-            credentials.setName(userModifyDto.getCredentialsDto().get().getFirstname());
-            credentials.setLastName(userModifyDto.getCredentialsDto().get().getLastName());
-            credentials.setBirthday(userModifyDto.getCredentialsDto().get().getBirthday());
-            credentials.setPhoneNumber(userModifyDto.getCredentialsDto().get().getPhoneNumber());
+            credentials.setName(userModifyDto.getCredentialsDto().getFirstname());
+            credentials.setLastName(userModifyDto.getCredentialsDto().getLastName());
+            credentials.setBirthday(userModifyDto.getCredentialsDto().getBirthday());
+            credentials.setPhoneNumber(userModifyDto.getCredentialsDto().getPhoneNumber());
             user.setCredentials(credentials);
         }
-        if(user.getManagersInfo() != null && userModifyDto.getManagersInfo().isPresent()) {
+        if(user.getManagersInfo() != null && userModifyDto.getManagersInfo()!= null ) {
             ManagersInfo managersInfo=new ManagersInfo();
-            managersInfo.setHotelName(userModifyDto.getManagersInfo().get().getHotelName());
-            managersInfo.setStartDate(userModifyDto.getManagersInfo().get().getStartDate());
+            managersInfo.setHotelName(userModifyDto.getManagersInfo().getHotelName());
+            managersInfo.setStartDate(userModifyDto.getManagersInfo().getStartDate());
             user.setManagersInfo(managersInfo);
         }
-        if(user.getClientsInfo() !=null && userModifyDto.getClientsInfoDto().isPresent()){
+        if(user.getClientsInfo() !=null && userModifyDto.getClientsInfoDto()!= null){
             ClientsInfo clientsInfo=new ClientsInfo();
-            clientsInfo.setPostcard(userModifyDto.getClientsInfoDto().get().getPostcard());
+            clientsInfo.setPostcard(userModifyDto.getClientsInfoDto().getPostcard());
             user.setClientsInfo(clientsInfo);
         }
 
@@ -151,13 +153,13 @@ public class UserMapper {
         return  userCreateDto;
     }
 
-    public NotificationDto userToNotificationDto(User user){
+    public NotificationDto userToNotificationDto(User user,String type){
         NotificationDto notificationDto=new NotificationDto();
 
         notificationDto.setUserDto(this.userToUserDto(user));
 
         NotificationTypeDto notificationTypeDto=new NotificationTypeDto();
-        notificationTypeDto.setType("TYPE_VERIFY");
+        notificationTypeDto.setType(type);
         notificationDto.setNotificationType(notificationTypeDto);
 
 

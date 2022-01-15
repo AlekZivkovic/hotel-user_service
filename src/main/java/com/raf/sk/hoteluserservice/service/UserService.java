@@ -15,6 +15,7 @@ public interface UserService{
 
     ManagerResponseDto hotelManagers(ManagerRequestDto managerRequestDto);
 
+    void resetpass(ResetPasswordRequestDto resetPasswordRequestDto);
 
     //Dobijeni useri ce biti prolsedjeni notifikacionom servicu
     // koji ce da obavesti korisnika da je uspesno kreiran nalog
