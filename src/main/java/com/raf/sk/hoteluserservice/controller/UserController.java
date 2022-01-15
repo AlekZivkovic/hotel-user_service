@@ -43,6 +43,13 @@ public class UserController {
         return new ResponseEntity<>(userService.findAll(pageable), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Update reservations for user")
+    @GetMapping("/update/{id}")
+    public ResponseEntity<Void> updateForUser(@PathVariable("id") Long id) {
+        userService.updateForUser(id);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
     @GetMapping("/{id}/discount")
     public ResponseEntity<DiscountDto> getDiscount(@PathVariable("id") Long id) {
         return new ResponseEntity<>(userService.findDiscount(id), HttpStatus.OK);

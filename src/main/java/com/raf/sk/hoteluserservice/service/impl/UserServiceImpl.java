@@ -21,6 +21,7 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -217,10 +218,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ManagerResponseDto hotelManagers(String hotelName) {
+        System.out.println("eve me");
         List<UserDto> lista= userRepository.findAll().stream()
                 .filter(user -> user.getManagersInfo().getHotelName() ==hotelName )
                 .map(userMapper::userToUserDto).collect(Collectors.toList());
 
+        if(lista == null)
+            lista = new ArrayList<>();
         return  new ManagerResponseDto(lista);
+    }
+
+    @Override
+    public void updateForUser(long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        User user = userOptional.get();
+        user.getClientsInfo().setNumberOfReservation(user.getClientsInfo().getNumberOfReservation()+1);
+        userRepository.save(user);
     }
 }

@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import javax.validation.constraints.Null;
+import java.util.Date;
 
 //https://thorben-janssen.com/complete-guide-inheritance-strategies-jpa-hibernate/
 @Entity
@@ -29,6 +30,8 @@ public class User {
 
 
     public User() {
+        managersInfo = new ManagersInfo("", new Date());
+        clientsInfo = new ClientsInfo(0, -1);
     }
 
     public User(String username, String password, String email, Credentials credentials,

@@ -30,7 +30,7 @@ public interface UserService{
 
     UserDto findUserById(long id);
 
-
+    void updateForUser(long id);
 
 
 
