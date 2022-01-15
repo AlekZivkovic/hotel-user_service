@@ -44,9 +44,9 @@ public class UserController {
     }
 
     @ApiOperation(value = "Update reservations for user")
-    @GetMapping("/update/{id}")
-    public ResponseEntity<Void> updateForUser(@PathVariable("id") Long id) {
-        userService.updateForUser(id);
+    @GetMapping("/update/{id}/{value}")
+    public ResponseEntity<Void> updateForUser(@PathVariable("id") Long id, @PathVariable("value") int value) {
+        userService.updateForUser(id, value);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 

@@ -229,10 +229,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateForUser(long id) {
+    public void updateForUser(long id, int value) {
         Optional<User> userOptional = userRepository.findById(id);
         User user = userOptional.get();
-        user.getClientsInfo().setNumberOfReservation(user.getClientsInfo().getNumberOfReservation()+1);
+        user.getClientsInfo().setNumberOfReservation(user.getClientsInfo().getNumberOfReservation()+value);
         userRepository.save(user);
     }
 }
