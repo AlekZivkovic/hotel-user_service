@@ -10,8 +10,7 @@ public class UserModifyResponseDto {
     private String password;
 
     private CredentialsDto credentialsDto;
-    private  ClientCreateDto.ClientsInfoDto clientsInfoDto;
-    private  ManagerCreateDto.ManagersInfoDto managersInfo;
+
 
 
     public UserModifyResponseDto() {
@@ -73,19 +72,8 @@ public class UserModifyResponseDto {
         this.credentialsDto = credentialsDto;
     }
 
-    public ClientCreateDto.ClientsInfoDto getClientsInfoDto() {
-        return clientsInfoDto;
-    }
 
-    public void setClientsInfoDto(ClientCreateDto.ClientsInfoDto clientsInfoDto) {
-        this.clientsInfoDto = clientsInfoDto;
-    }
 
-    public ManagerCreateDto.ManagersInfoDto getManagersInfo() {
-        return managersInfo;
-    }
 
-    public void setManagersInfo(ManagerCreateDto.ManagersInfoDto managersInfo) {
-        this.managersInfo = managersInfo;
-    }
+
 }

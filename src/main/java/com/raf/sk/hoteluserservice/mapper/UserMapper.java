@@ -119,17 +119,7 @@ public class UserMapper {
             credentials.setPhoneNumber(userModifyDto.getCredentialsDto().getPhoneNumber());
             user.setCredentials(credentials);
         }
-        if(user.getManagersInfo() != null && userModifyDto.getManagersInfo()!= null ) {
-            ManagersInfo managersInfo=new ManagersInfo();
-            managersInfo.setHotelName(userModifyDto.getManagersInfo().getHotelName());
-            managersInfo.setStartDate(userModifyDto.getManagersInfo().getStartDate());
-            user.setManagersInfo(managersInfo);
-        }
-        if(user.getClientsInfo() !=null && userModifyDto.getClientsInfoDto()!= null){
-            ClientsInfo clientsInfo=new ClientsInfo();
-            clientsInfo.setPostcard(userModifyDto.getClientsInfoDto().getPostcard());
-            user.setClientsInfo(clientsInfo);
-        }
+
 
         return  user;
     }
