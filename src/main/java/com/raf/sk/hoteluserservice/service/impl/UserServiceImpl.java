@@ -201,7 +201,7 @@ public class UserServiceImpl implements UserService {
         claims.put("id", user.getId());
         claims.put("role", user.getRole().getName());
         //Generate token
-        return new TokenResponseDto(tokenService.generate(claims));
+        return new TokenResponseDto(tokenService.generate(claims),user.getId());
     }
 
     @Override

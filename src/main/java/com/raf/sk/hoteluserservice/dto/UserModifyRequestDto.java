@@ -4,8 +4,6 @@ package com.raf.sk.hoteluserservice.dto;
 public class UserModifyRequestDto extends  UserDto{
     private String password;
     private CredentialsDto credentialsDto;
-    private ClientCreateDto.ClientsInfoDto clientsInfo;
-    private ManagerCreateDto.ManagersInfoDto managersInfo;
 
     public String getPassword() {
         return password;
@@ -40,19 +38,4 @@ public class UserModifyRequestDto extends  UserDto{
     }
 
 
-    public ClientCreateDto.ClientsInfoDto getClientsInfo() {
-        return clientsInfo;
-    }
-
-    public void setClientsInfo(ClientCreateDto.ClientsInfoDto clientsInfo) {
-        this.clientsInfo = clientsInfo;
-    }
-
-    public ManagerCreateDto.ManagersInfoDto getManagersInfo() {
-        return managersInfo;
-    }
-
-    public void setManagersInfo(ManagerCreateDto.ManagersInfoDto managersInfo) {
-        this.managersInfo = managersInfo;
-    }
 }

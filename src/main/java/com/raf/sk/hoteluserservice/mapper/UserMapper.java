@@ -100,18 +100,7 @@ public class UserMapper {
         credentialsDto.setPhoneNumber(user.getCredentials().getPhoneNumber());
         userModifyDto.setCredentialsDto(credentialsDto);
 
-        //Clients
-        if(user.getClientsInfo() != null) {
-            ClientCreateDto.ClientsInfoDto clientsInfoDto = new ClientCreateDto.ClientsInfoDto();
-            clientsInfoDto.setPostcard(user.getClientsInfo().getPostcard());
-            userModifyDto.setClientsInfo(clientsInfoDto);
-        }
-        if(user.getManagersInfo() != null){
-            ManagerCreateDto.ManagersInfoDto managersInfoDto= new ManagerCreateDto.ManagersInfoDto();
-            managersInfoDto.setHotelName(user.getManagersInfo().getHotelName());
-            managersInfoDto.setStartDate(user.getManagersInfo().getStartDate());
-            userModifyDto.setManagersInfo(managersInfoDto);
-        }
+
         return  userModifyDto;
     }
 
